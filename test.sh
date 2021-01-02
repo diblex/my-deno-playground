@@ -1,0 +1,1 @@
+deno test --allow-all --lock=lock.json --unstable ./src/tests/*
