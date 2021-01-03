@@ -1,5 +1,6 @@
 export function validateCreate(body: any, model: any) {
   const fields = Object.assign({}, model.fields);
+  const defaults = Object.assign({}, model.defaults);
   delete fields.id;
   let errors = [];
   for (let key in fields) {
@@ -9,7 +10,9 @@ export function validateCreate(body: any, model: any) {
     const bodyType = typeof body[key];
     let errorMsg;
     if (body[key] == null) {
-      errorMsg = `Missing ${key} parameter in request body`;
+      if (defaults[key] == null) {
+        errorMsg = `Missing ${key} parameter in request body`;
+      }
     } else if (bodyType !== fieldType) {
       errorMsg = `Invalid ${bodyType} type for ${key}, expected ${fieldType}`;
     } else if (hasLengthRule(field) && body[key].length > field.length) {
