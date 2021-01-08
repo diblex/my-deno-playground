@@ -9,8 +9,8 @@
 # -r        Reload all cached dependencies before running server.
 #
 
-entryPoint="./src/server.ts"
-dependenciesFolder="./src/deps.ts"
+entryPoint="./src/main.ts"
+dependenciesFolder="./deps.ts"
 dev=false
 update=false
 lint=false
@@ -28,7 +28,7 @@ done
 
 if "$reload"; then
     echo "\nReloading cached dependencies..."
-    deno cache --import-map import-map.json --reload --unstable $entryPoint
+    deno cache --reload --unstable $entryPoint
 fi
 if "$update"; then
     echo "\nUpdating locked dependencies..."
@@ -40,8 +40,8 @@ if "$lint"; then
 fi
 if "$dev"; then
     echo '\nRunning server in development mode'
-    deno run --allow-net --allow-read --allow-write --watch --unstable --no-check --lock=lock.json --import-map=import-map.json $entryPoint
+    deno run --allow-net --allow-read --allow-write --watch --unstable --no-check --lock=lock.json  $entryPoint
 else
     echo '\nRunning server in production mode'
-    deno run --allow-net --allow-read --allow-write --lock=lock.json --cached-only --import-map=import-map.json --unstable $entryPoint
+    deno run --allow-net --allow-read --allow-write --lock=lock.json --cached-only --unstable $entryPoint
 fi

@@ -1,4 +1,4 @@
-import { Artifact } from "/models/Artifact.ts";
+import { Artifact } from "../models/Artifact.ts";
 
 export class MainTemplate {
   artifacts: Artifact[];

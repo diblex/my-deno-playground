@@ -1,6 +1,6 @@
-import { Comment } from "/models/Comment.ts";
-import { Request, Response } from "/deps.ts";
-import { validateCreate } from "/lib/validator.ts";
+import { Comment } from "../models/Comment.ts";
+import { Request, Response } from "../../deps.ts";
+import { validateCreate } from "../lib/validator.ts";
 
 export async function createComment(req: Request, res: Response) {
   const validation = validateCreate(req.body, Comment);
@@ -12,7 +12,8 @@ export async function createComment(req: Request, res: Response) {
     });
   }
   const post = await Comment.create([req.body]);
-  return res.sendStatus(201);
+  res.status = 201;
+  return res.json({});
 }
 
 export async function readComment(req: Request, res: Response) {

@@ -1,4 +1,4 @@
-import { Artifact } from "/models/Artifact.ts";
+import { Artifact } from "../models/Artifact.ts";
 
 export async function fetchRepoArtifacts() {
   const gitHubUrl = "https://api.github.com";

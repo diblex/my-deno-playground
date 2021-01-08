@@ -14,4 +14,7 @@ export {
   Model,
   SQLite3Connector,
 } from "https://deno.land/x/denodb/mod.ts";
+export { Request as HttpRequest } from 'https://deno.land/x/request@1.3.0/request.ts'
+export { TestSuite, test } from "https://deno.land/x/test_suite@v0.6.4/mod.ts";
+export type { Server } from "https://deno.land/std@0.83.0/http/server.ts";
 

@@ -12,4 +12,6 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "denoland.vscode-deno",
   },
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.importModuleSpecifier": "relative",
 }
