@@ -5,16 +5,17 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch Deno",
+      "name": "Launch Deno debug",
       "request": "launch",
       "type": "pwa-node",
-      "program": "main.ts",
+      "program": "src/main.ts",
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "deno",
       "runtimeArgs": [
         "run",
         "--inspect-brk",
-        "--allow-all"
+        "--unstable",
+        "--allow-all",
       ],
       "attachSimplePort": 9229
     }

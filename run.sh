@@ -39,9 +39,9 @@ if "$lint"; then
     deno lint --unstable
 fi
 if "$dev"; then
-    echo '\nRunning server in development mode'
+    echo '\nRunning app in development mode'
     deno run --allow-net --allow-read --allow-write --watch --unstable --no-check --lock=lock.json  $entryPoint
 else
-    echo '\nRunning server in production mode'
+    echo '\nRunning app in production mode'
     deno run --allow-net --allow-read --allow-write --lock=lock.json --cached-only --unstable $entryPoint
 fi
