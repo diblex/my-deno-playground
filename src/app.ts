@@ -1,7 +1,4 @@
-import { Server, ServerRequest } from "../deps.ts";
-import {
-  serve,
-} from "../deps.ts";
+import { Server, ServerRequest, serve } from "../deps.ts";
 import { testController } from "./controllers/testCtrl.ts";
 import { jsonToUtf8 } from "./lib/utils.ts";
 import { HttpMethod, RouteException, Router } from "./lib/jason/mod.ts";

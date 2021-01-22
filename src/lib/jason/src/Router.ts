@@ -10,11 +10,7 @@ const PARAM_NAME_REG_EXP = /:[a-zA-Z]*/g;
  * It works directly with Deno std@0.83.0/http/server.ts
  */
 export class Router {
-  private routes: Route[];
-
-  constructor() {
-    this.routes = [];
-  }
+  routes: Route[] = [];
 
   /**
    * Register a route into the router
