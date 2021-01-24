@@ -7,10 +7,19 @@ export class Jason {
   router: Router = new Router();
   server: Server | undefined;
   
+  /**
+   * This function will add a router in the HTTP server.
+   * Routes registered in this router will be used.
+   * @param router 
+   */
   use(router: Router) {
     this.router.routes = this.router.routes.concat(router.routes);
   }
 
+  /**
+   * This function will start an HTTP server listening to the specified port.
+   * @param port 
+   */
   async listen(port: number) {
     this.server = serve({ port });
     for await (const req of this.server) {
@@ -22,6 +31,9 @@ export class Jason {
     }
   }
 
+  /**
+   * This function closes the server and stops listening to the port.
+   */
   close() {
     this.server?.close();
   }

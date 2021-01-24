@@ -4,10 +4,10 @@
  */
 export class RouteException {
   status: number;
-  body: {[key: string]: string | number | boolean}
+  body: {[key: string]: string | number | boolean}[]
 
-  constructor(status: number, body?: {[key: string]: string | number | boolean}) {
+  constructor(status: number, body?: {[key: string]: string | number | boolean}[]) {
     this.status = status;
-    this.body = body ?? {};
+    this.body = body ?? [];
   }
 }
