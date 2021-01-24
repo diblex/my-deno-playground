@@ -3,24 +3,32 @@
  * @param val 
  */
 export function jsonToUint8Array(val: {[key: string]: any}) {
-  const encoder = new TextEncoder();
-  return encoder.encode(JSON.stringify(val));
+  return stringToUint8Array(JSON.stringify(val))
 }
 
 /**
- * Converts Uint8Array into string
+ * Converts a string into Uint8Array
  * @param val 
  */
-export function uint8ArrToString(val: Uint8Array) {
-  const decoder = new TextDecoder();
-  return decoder.decode(val);
+export function stringToUint8Array(val: string) {
+  const encoder = new TextEncoder();
+  return encoder.encode(val);
 }
 
 /**
  * Converts Uint8Array into JSON
  * @param val 
  */
-export function uint8ArrToJson(val: Uint8Array) {
-  const str = uint8ArrToString(val);
+export function uint8ArrayToJson(val: Uint8Array) {
+  const str = uint8ArrayToString(val);
   return JSON.parse(str);
+}
+
+/**
+ * Converts Uint8Array into string
+ * @param val 
+ */
+export function uint8ArrayToString(val: Uint8Array) {
+  const decoder = new TextDecoder();
+  return decoder.decode(val);
 }
