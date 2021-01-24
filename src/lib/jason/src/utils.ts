@@ -32,3 +32,12 @@ export function uint8ArrayToString(val: Uint8Array) {
   const decoder = new TextDecoder();
   return decoder.decode(val);
 }
+
+/**
+ * It returns a response Header object configured for Jason.
+ */
+export function getJasonHeader() {
+  const headers = new Headers();
+  headers.set('Content-Type', 'application/json');
+  return headers;
+}

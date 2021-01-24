@@ -7,7 +7,7 @@ export enum HttpMethod {
   POST = 'POST',
   GET = 'GET',
   PUT = 'PUT',
-  DEL = 'DEL'
+  DEL = 'DELETE'
 }
 
 /**
@@ -16,5 +16,7 @@ export enum HttpMethod {
 export interface Route {
   method: HttpMethod,
   path: string, 
-  controller: (req: ServerRequest, params: {[key: string]: string}) => void
+  controller: (req: ServerRequest, params: RequestParams) => Promise<void>
 };
+
+export interface RequestParams {[key: string]: string}

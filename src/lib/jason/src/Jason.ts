@@ -1,7 +1,7 @@
 import { serve, Server, ServerRequest } from '../depts.ts';
 import { Router } from "./Router.ts";
 import { RouteException } from "./RouteException.ts";
-import { jsonToUint8Array } from "./utils.ts";
+import { jsonToUint8Array, stringToUint8Array } from "./utils.ts";
 
 export class Jason {
   router: Router = new Router();
@@ -24,9 +24,9 @@ export class Jason {
     this.server = serve({ port });
     for await (const req of this.server) {
       try {
-        this.router.route(req);
+        await this.router.route(req);
       } catch(error) {
-        this.errorHandler(req, error);
+        await this.errorHandler(req, error);
       }
     }
   }
@@ -39,11 +39,19 @@ export class Jason {
   }
 
   private errorHandler(req: ServerRequest, error: RouteException) {
-    req.headers.set('content-type', 'application-json');
-    req.respond({
-      status: error.status ?? 500, 
-      body: jsonToUint8Array(error.body),
-      headers: req.headers
+    const headers = new Headers();
+    let body;
+    if (!error.status) {
+      body = stringToUint8Array(error.message);
+      console.error(error.message, error.stack);
+    } else {
+      headers.set('Content-Type', 'application/json');
+      body = jsonToUint8Array(error.body);
+    }
+    return req.respond({
+      status: error.status ?? 500,
+      body,
+      headers
     });
   }
 }

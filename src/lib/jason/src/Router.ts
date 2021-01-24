@@ -2,8 +2,8 @@ import { ServerRequest } from "../depts.ts";
 import { HttpMethod, Route } from "./interfaces.ts";
 import { RouteException } from "./RouteException.ts";
 
-const PARAM_VALUE_REG_EXP = /([A-Za-z0-9_\\-]*)/;
-const PARAM_NAME_REG_EXP = /:[a-zA-Z]*/g;
+const PARAM_VALUE_REG_EXP = /([A-Za-z0-9_\\-]+)/;
+const PARAM_NAME_REG_EXP = /:[a-zA-Z]+/g;
 
 /**
  * Class to enroute requests coming to a HTTP server.
@@ -20,7 +20,7 @@ export class Router {
    * Like /resource/:id/sub-resource/:name
    * @param controller Action to execute in this route.
    */
-  register(method: HttpMethod, path: string, controller: (req: ServerRequest, params: {[key: string]: string}) => void) {
+  register(method: HttpMethod, path: string, controller: Route["controller"]) {
     this.routes.push({
       method,
       path,
@@ -39,7 +39,7 @@ export class Router {
     if (index !== -1) {
       const route = this.routes[index];
       const params = this.getParams(route, req);
-      route.controller(req, params);
+      return route.controller(req, params);
     } else {
       throw new RouteException(404);
     }
@@ -64,6 +64,7 @@ export class Router {
     paramNames?.forEach(name => {
       regExpStr = regExpStr.replace(`:${name}`, PARAM_VALUE_REG_EXP.source);
     });
+    regExpStr += '$';
     return new RegExp(regExpStr);
   }
 
