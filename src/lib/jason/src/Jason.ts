@@ -11,7 +11,7 @@ export class Jason {
     this.router.routes = this.router.routes.concat(router.routes);
   }
 
-  listen(port: number) {
+  async listen(port: number) {
     this.server = serve({ port });
     for await (const req of this.server) {
       try {

@@ -1,48 +1,32 @@
-import { Server, ServerRequest, serve } from "../deps.ts";
 import { testController } from "./controllers/testCtrl.ts";
-import { jsonToUtf8 } from "./lib/utils.ts";
-import { HttpMethod, RouteException, Router } from "./lib/jason/mod.ts";
+import { HttpMethod, Router } from "./lib/jason/mod.ts";
+import { Jason } from "./lib/jason/src/Jason.ts";
 
 export class App {
-  private server: Server;
-  private router: Router;
+  private jason: Jason;
   public port: number;
 
   constructor(opts: {
     port: number
   }) {
     this.port = opts.port;
-    this.server = serve({ port: this.port });
-    this.router = new Router();
+    this.jason = new Jason();
   }
 
   registerControllers() {
+    const router = new Router();
     // this.router.register(HttpMethod.POST, "/api/v1/comment/", testController);
-    this.router.register(HttpMethod.GET, "/test/:id", testController);
+    router.register(HttpMethod.GET, "/test/:id", testController);
+    this.jason.use(router);
   }
 
   async runServer() {
     this.registerControllers();
-    for await (const req of this.server) {
-      try {
-        this.router.route(req);
-      } catch(error) {
-        this.errorHandler(req, error);
-      }
-    }
+    this.jason.listen(this.port);
   }
 
   stopServer() {
-    this.server.close();
-  }
-
-  private errorHandler(req: ServerRequest, error: RouteException) {
-    req.headers.set('content-type', 'application-json');
-    req.respond({
-      status: error.status ?? 500, 
-      body: jsonToUtf8(error.body),
-      headers: req.headers
-    });
+    this.jason.close();
   }
 
 }
