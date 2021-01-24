@@ -30,6 +30,10 @@ export function validateCreate(body: any, model: any) {
   }
 }
 
+export function validateUpdate(body: any, model: any) {
+  return validateCreate(body, model);
+}
+
 function hasLengthRule(field: any) {
   return typeof field !== 'string' && field?.type === 'string' && field?.length;
 }

@@ -1,39 +1,57 @@
 import { Comment } from "../models/Comment.ts";
-import { validateCreate } from "../lib/validator.ts";
-import { ServerRequest } from "../../deps.ts";
+import { validateCreate, validateUpdate } from "../lib/validator.ts";
+import { getJasonHeader, jsonToUint8Array, RequestParams, RouteException, uint8ArrayToJson, ServerRequest } from "../../deps.ts";
 
-// TODO find how to convert Deno server body to json
+const maxItems = 100;
+
 export async function createComment(req: ServerRequest) {
-  const body = await Deno.readAll(req.body);
-  const validation = validateCreate(req.body, Comment);
+  const bodyParams = uint8ArrayToJson(await Deno.readAll(req.body));
+  const validation = validateCreate(bodyParams, Comment);
   if (!validation.valid) {
-    
-    // res.status = 400;
-    return req.respond({
-      status: 400,
-      body: validation.errors.toString()
-      // errors: validation.errors
-    });
+    throw new RouteException(400, validation.errors)
   }
-  const post = await Comment.create([req.body]);
-  res.status = 201;
-  return res.json({});
+  await Comment.create([bodyParams]);
+  req.respond({status: 201});
 }
 
-// export async function readComment(req: Request, res: Response) {
-//   const posts = await Comment.select('id', 'title', 'body', 'author').all();
-//   return res.json(posts);
-// }
+export async function listComments(req: ServerRequest) {
+  const posts = await Comment.limit(maxItems).all();
+  req.respond({
+    status: 200, 
+    body: jsonToUint8Array(posts),
+    headers: getJasonHeader()
+  });
+}
 
-// export async function getComment(req: Request, res: Response) {
-//   const post = await Comment.select('id', 'title', 'body', 'author').where('id', req.params.id).first();
-//   return res.json(post);
-// }
+export async function getComment(req: ServerRequest, params: RequestParams) {
+  const postQuery = Comment.where('id', params.id);
+  const post = await postQuery.first();
+  if (!post) {
+    throw new RouteException(404);
+  }
+  req.respond({
+    status: 200,
+    body: jsonToUint8Array(post),
+    headers: getJasonHeader()
+  })
+}
 
-// export async function updateComment(req: Request, res: Response) {
+export async function updateComment(req: ServerRequest, params: RequestParams) {
+  const bodyParams = uint8ArrayToJson(await Deno.readAll(req.body));
+  const validation = validateUpdate(bodyParams, Comment);
+  if (!validation.valid) {
+    throw new RouteException(400, validation.errors)
+  }
+  const comment = await Comment.where('id', params.id).update(bodyParams);
+  if (!comment.length) {
+    throw new RouteException(404);
+  } else {
+    req.respond({status: 204});
+  }
+}
 
-// }
+export async function deleteComment(req: ServerRequest, params: RequestParams) {
+    await Comment.where('id', params.id).delete();
+    req.respond({status: 204});
+}
 
-// export async function deleteComment(req: Request, res: Response) {
-
-// }
