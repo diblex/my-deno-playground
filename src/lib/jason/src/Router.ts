@@ -13,8 +13,12 @@ export class Router {
   routes: Route[] = [];
 
   /**
-   * Register a route into the router
-   * @param path 
+   * Register a route into the router.
+   * @param method HTTP method
+   * @param path Path of the route, without domain. It can include URL params
+   * defined by an alias.
+   * Like /resource/:id/sub-resource/:name
+   * @param controller Action to execute in this route.
    */
   register(method: HttpMethod, path: string, controller: (req: ServerRequest, params: {[key: string]: string}) => void) {
     this.routes.push({
@@ -67,6 +71,13 @@ export class Router {
     return route.path.match(PARAM_NAME_REG_EXP)?.map(match => match.substring(1));
   }
 
+  /**
+   * Returns object with the URL params in the request, where the keys are the
+   * params aliases defined in the route and the values are the values in the
+   * request.
+   * @param route Route where the params are defined
+   * @param req HTTP request
+   */
   private getParams(route: Route, req: ServerRequest) {
     const res = {} as {[key: string]: string};
     const names = this.getRouteParamsNames(route);
