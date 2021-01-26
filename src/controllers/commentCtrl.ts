@@ -1,6 +1,6 @@
 import { Comment } from "../models/Comment.ts";
 import { validateCreate, validateUpdate } from "../lib/validator.ts";
-import { getJasonHeader, jsonToUint8Array, RequestParams, RouteException, uint8ArrayToJson, ServerRequest } from "../../deps.ts";
+import { getJasonHeader, jsonToUint8Array, RequestParams, RouteException, uint8ArrayToJson, ServerRequest, Model } from "../../deps.ts";
 
 const maxItems = 100;
 
@@ -42,8 +42,8 @@ export async function updateComment(req: ServerRequest, params: RequestParams) {
   if (!validation.valid) {
     throw new RouteException(400, validation.errors)
   }
-  const comment = await Comment.where('id', params.id).update(bodyParams);
-  if (!comment.length) {
+  const comment = await Comment.where('id', params.id).update(bodyParams) as Model;
+  if (!comment.id) {
     throw new RouteException(404);
   } else {
     req.respond({status: 204});
