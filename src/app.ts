@@ -34,11 +34,11 @@ export class App {
   private registerControllers() {
     const router = new Router();
     // router.register(HttpMethod.GET, "/test/:id", testController);
-    router.register(HttpMethod.POST, "/comment/", createComment);
-    router.register(HttpMethod.GET, "/comment/", listComments);
-    router.register(HttpMethod.GET, "/comment/:id", getComment);
-    router.register(HttpMethod.PUT, "/comment/:id", updateComment);
-    router.register(HttpMethod.DELETE, "/comment/:id", deleteComment);
+    router.register(HttpMethod.POST, "/comments/", createComment);
+    router.register(HttpMethod.GET, "/comments/", listComments);
+    router.register(HttpMethod.GET, "/comments/:id", getComment);
+    router.register(HttpMethod.PUT, "/comments/:id", updateComment);
+    router.register(HttpMethod.DELETE, "/comments/:id", deleteComment);
     router.register(HttpMethod.GET, "/artifacts/", listArtifacts);
     router.register(HttpMethod.GET, "/artifacts/render", renderArtifacts);
     this.jason.use(router);
