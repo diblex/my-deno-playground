@@ -36,8 +36,8 @@ export class App {
     router.register(HttpMethod.POST, "/comment/", createComment);
     router.register(HttpMethod.GET, "/comment/", listComments);
     router.register(HttpMethod.GET, "/comment/:id", getComment);
-    router.register(HttpMethod.POST, "/comment/:id", updateComment);
-    router.register(HttpMethod.DEL, "/comment/:id", deleteComment);
+    router.register(HttpMethod.PUT, "/comment/:id", updateComment);
+    router.register(HttpMethod.DELETE, "/comment/:id", deleteComment);
     this.jason.use(router);
   }
 

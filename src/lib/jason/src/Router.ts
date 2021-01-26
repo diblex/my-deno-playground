@@ -1,6 +1,6 @@
 import { ServerRequest } from "../depts.ts";
 import { HttpMethod, Route } from "./interfaces.ts";
-import { RouteException } from "./RouteException.ts";
+import { HttpException } from "./HttpException.ts";
 
 const PARAM_VALUE_REG_EXP = /([A-Za-z0-9_\\-]+)/;
 const PARAM_NAME_REG_EXP = /:[a-zA-Z]+/g;
@@ -41,10 +41,10 @@ export class Router {
       const params = this.getParams(route, req);
       return route.controller(req, params);
     } else {
-      throw new RouteException(404);
+      throw new HttpException(404);
     }
   }
-
+ 
   /**
    * Returns true if the request matches the route.
    * @param route
@@ -53,7 +53,7 @@ export class Router {
   private testRoute(route: Route, req: ServerRequest) {
     const regExp = this.getRoutePathAsRegExp(route);
     if (req.method !== route.method ) {
-      return null;
+      return false;
     }
     return regExp.test(req.url);
   }

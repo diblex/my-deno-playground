@@ -1,6 +1,6 @@
 import { serve, Server, ServerRequest } from '../depts.ts';
 import { Router } from "./Router.ts";
-import { RouteException } from "./RouteException.ts";
+import { HttpException } from "./HttpException.ts";
 import { jsonToUint8Array, stringToUint8Array } from "./utils.ts";
 
 export class Jason {
@@ -38,7 +38,7 @@ export class Jason {
     this.server?.close();
   }
 
-  private errorHandler(req: ServerRequest, error: RouteException) {
+  private errorHandler(req: ServerRequest, error: HttpException) {
     const headers = new Headers();
     let body;
     if (!error.status) {
