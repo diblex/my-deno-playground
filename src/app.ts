@@ -1,6 +1,7 @@
 import { Database, HttpMethod, Jason, Router, SQLite3Connector } from "../deps.ts";
 import { Comment } from "./models/Comment.ts";
 import { createComment, deleteComment, getComment, listComments, updateComment } from "./controllers/commentCtrl.ts";
+import { listArtifacts, renderArtifacts } from "./controllers/artifactCtrl.ts";
 
 export class App {
   private jason: Jason;
@@ -38,6 +39,8 @@ export class App {
     router.register(HttpMethod.GET, "/comment/:id", getComment);
     router.register(HttpMethod.PUT, "/comment/:id", updateComment);
     router.register(HttpMethod.DELETE, "/comment/:id", deleteComment);
+    router.register(HttpMethod.GET, "/artifacts/", listArtifacts);
+    router.register(HttpMethod.GET, "/artifacts/render", renderArtifacts);
     this.jason.use(router);
   }
 
