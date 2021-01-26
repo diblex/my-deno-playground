@@ -11,7 +11,7 @@ export async function createComment(req: ServerRequest) {
     throw new RouteException(400, validation.errors)
   }
   await Comment.create([bodyParams]);
-  req.respond({status: 201});
+  req.respond({status: 201, body: jsonToUint8Array({})});
 }
 
 export async function listComments(req: ServerRequest) {
@@ -46,12 +46,12 @@ export async function updateComment(req: ServerRequest, params: RequestParams) {
   if (!comment.id) {
     throw new RouteException(404);
   } else {
-    req.respond({status: 204});
+    req.respond({status: 204, body: jsonToUint8Array({})});
   }
 }
 
 export async function deleteComment(req: ServerRequest, params: RequestParams) {
     await Comment.where('id', params.id).delete();
-    req.respond({status: 204});
+    req.respond({status: 204, body: jsonToUint8Array({})});
 }
 

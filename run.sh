@@ -16,7 +16,7 @@ update=false
 lint=false
 reload=false
 
-while getopts dulr flag
+while getopts dulrt flag
 do
   case "${flag}" in
       d) dev=true;;
@@ -40,8 +40,10 @@ if "$lint"; then
 fi
 if "$dev"; then
     echo '\nRunning app in development mode'
-    deno run --allow-net --allow-read --allow-write --watch --unstable --no-check --lock=lock.json  $entryPoint
-else
+    echo 'PORT=8000\nENV=dev' > .env;
+    deno run --allow-net --allow-read --allow-write --allow-env --watch --unstable --no-check --lock=lock.json  $entryPoint
+else 
     echo '\nRunning app in production mode'
-    deno run --allow-net --allow-read --allow-write --lock=lock.json --cached-only --unstable $entryPoint
+    echo 'PORT=80\nENV=production' > .env;
+    deno run --allow-net --allow-read --allow-write --allow-env --lock=lock.json --cached-only --unstable $entryPoint
 fi

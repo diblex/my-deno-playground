@@ -91,6 +91,8 @@
   "https://deno.land/x/collections@v0.10.2/common.ts": "34e8367e3696c3f872ae417d7c421fa908a5a2125a1c4cb259f7dee9561a7096",
   "https://deno.land/x/collections@v0.10.2/vector.ts": "d9ed2ca5dda035b5c1477d2252f3ffccaf9d671725e6c55e96278f0206e4c83f",
   "https://deno.land/x/colorlog@v1.0/mod.ts": "1a547b3d64bb7cb021d5782d68ef55ace10730ed12a802e0663e4658610a71a2",
+  "https://deno.land/x/dotenv@v2.0.0/mod.ts": "327b0f2c335e69ca127b0e8b282210d21e45a1f9f6ce597484fbb3f3b23cb461",
+  "https://deno.land/x/dotenv@v2.0.0/util.ts": "693730877b13f8ead2b79b2aa31e2a0652862f7dc0c5f6d2f313f4d39c7b7670",
   "https://deno.land/x/mongo@v0.20.0/bson/bson.d.ts": "f002637dd5fbdc2ce2720033eae2f5a70e52b83df7584aaf26423c74f1852f10",
   "https://deno.land/x/mongo@v0.20.0/bson/mod.ts": "4cfbe6273e120e74e75dacf5a6ee5eee360fa900ceee9240892cd8e03f160ebf",
   "https://deno.land/x/mongo@v0.20.0/deps.ts": "7734e754c365826741a06445ac0694b2aa59c529f9fb0ed752e73733fd76c5c2",

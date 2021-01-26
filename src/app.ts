@@ -5,14 +5,17 @@ import { listArtifacts, renderArtifacts } from "./controllers/artifactCtrl.ts";
 
 export class App {
   private jason: Jason;
-  private db: Database;
+  public db: Database;
   public port: number;
+  public env: string;
   public debug: boolean;
 
   constructor(opts: {
     port: number,
+    env?: string,
     debug?: boolean
   }) {
+    this.env = opts.env ?? 'production';
     this.port = opts.port;
     this.debug = opts.debug ?? false;
     this.jason = new Jason();
@@ -21,14 +24,14 @@ export class App {
 
   async runServer() {
     this.registedModels();
-    this.db.sync();
+    await this.db.sync();
     this.registerControllers();
     this.jason.listen(this.port);
   }
 
-  stopServer() {
-    this.db.close();
-    this.jason.close();
+  async stopServer() {
+    await this.db.close();
+    return this.jason.close();
   }
 
   private registerControllers() {
@@ -44,8 +47,9 @@ export class App {
   }
 
   private connectDB() {
+    const str = (this.env !== 'production') ? '.'+this.env : '';
     const connector = new SQLite3Connector({
-      filepath: './database.sqlite',
+      filepath: `./database${str}.sqlite`,
     });
     return new Database(connector, {debug: true});
   }
