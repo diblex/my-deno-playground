@@ -33,7 +33,6 @@ export class App {
 
   private registerControllers() {
     const router = new Router();
-    // router.register(HttpMethod.GET, "/test/:id", testController);
     router.register(HttpMethod.POST, "/comments/", createComment);
     router.register(HttpMethod.GET, "/comments/", listComments);
     router.register(HttpMethod.GET, "/comments/:id", getComment);
